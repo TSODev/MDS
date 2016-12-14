@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<!--
+ Copyright (c) 2007 BMC Software, Inc.
+ All rights reserved.
+
+ This software is the confidential and proprietary information of 
+ BMC Software, Inc ("Confidential Information"). You shall not 
+ disclose such Confidential Information and shall use it only in
+ accordance with the terms of the license agreement between 
+ you and BMC Software, Inc. 
+ 
+ Various log levels are: DEBUG, INFO, WARN, ERROR and FATAL. The levels are 
+ ordered and we have DEBUG < INFO < WARN < ERROR < FATAL. A logging request 
+ is said to be enabled if its level is higher than or equal to the level of 
+ its logger. For example, if the logger level is WARN, then all Warn, Error and 
+ Fatal logging messages will be logged.
+ 
+ To specify the log filename with the absolute path, please always use the
+ forward slashes in the path name, e.g to create the log file in the c:\temp 
+ directory on a Windows system, the config would be
+ 		<param 	name="File" value="c:/temp/javaapi.log" />	
+ 
+-->
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<appender name="Console" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param 	name="ConversionPattern"
+					  value="%d %-5p %C - %m%n"/>
+		</layout>
+	</appender>
+
+	<appender name="Light" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param 	name="ConversionPattern"
+					  value="%m%n"/>
+		</layout>
+	</appender>
+
+	<appender name="FileLog" class="org.apache.log4j.RollingFileAppender">
+		<param 	name="File" value="logs/MeteoDesServices.html" />
+		<param 	name="MaxFileSize" value="100KB"/>
+		<!-- Keep one backup file -->
+		<param 	name="MaxBackupIndex" value="1"/>
+		<layout class="org.apache.log4j.HTMLLayout">
+		</layout>
+	</appender>
+
+	<!-- log4j levels : ALL < DEBUG < INFO < WARN < ERROR < FATAL < OFF.
+	-->
+	<logger name="tsodev.MeteoDesServices">
+		<level 	value="WARN" />
+	</logger>
+
+	<!--Set root category priority to fatal -->
+	<root>
+		<priority value ="info" />
+		<!--
+		<appender-ref ref="Console" />
+		-->
+		<appender-ref ref="FileLog" />
+	</root>
+
+</log4j:configuration>
